@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Mono|PT+Sans');
+@import 'variables.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.Container {
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+
+  background-color: $background-color;
+  color: $text-color;
+}
+
+.Graph{
+  color: $header-text-color;
+  margin-left: 50px;
+  margin-top: 30px;
+  overflow: visible;
+  .Graph__Area{
+    fill: transparentize($background-color, 0.9);
+  }
+  .Graph__Line{
+    fill: none;
+    stroke-width: 3px;
+    stroke: $background-color;
+  }
+
+  text{
+    fill: $header-text-color;
+  }
+  .tick> line{
+    stroke: $header-text-color;
+  }
+  .domain{
+    stroke: $header-text-color;
+  }
+}
+
+.Header {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: $padding;
+
+  color: $header-text-color;
+  background-color: $header-background-color;
+
+  .Header__Title {
+    font-size: 2em;
+
+    .Header__Title__Value {
+      @include monospace
+      font-size: 1.5em;
+    }
+  }
+
+  .Header__Status {
+    margin-bottom: 5px;
+
+    .Header__Status__Description {
+      @include header-info;
+
+      padding: 4px 6px 4px 6px;
+      border-radius: 5px;
+      color: $header-background-color;
+    }
+
+    .Header__Status__Description--loaded {
+      background-color: #2ecc71;
+    }
+
+    .Header__Status__Description--loading {
+      background-color: #e67e22;
+    }
+  }
+
+  .Header__LastUpdate {
+    margin-bottom: 20px;
+
+    .Header__LastUpdate__Time {
+      @include header-info;
+    }
+  }
+
+  .Header__Length {
+    @include header-data
+  }
+
+  .Header__Orderers {
+    @include header-data
+  }
+
+  .Header__Peers {
+    @include header-data
+  }
+
+  .Header__Graph {
+    @include header-data
+  }
+
+  .Header__Logo {
+    margin-top: auto;
+
+    img {
+      width: 50%;
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.Blockchain {
+  flex-basis: 100% - $header-width;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: auto;
+
+  padding: 2 * $padding;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $header-background-color;
+  }
+
+  .Blockchain__Pusher {
+    min-height: 2 * $padding;
+    width: 10px;
+  }
+
+  .Blockchain__Separator {
+    margin-left: $blockchain-logo-size/2;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    width: 4px;
+    height: $blockchain-logo-size/2;
+
+    border-radius: 2px;
+
+    background-color: $header-background-color;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    animation: separator-appear 1s ease-in-out 0s 1;
+  }
+
+  .Block {
+    width: 85%;
+
+    display: grid;
+    grid-template-columns: ($blockchain-logo-size + $padding) 100%;
+    grid-template-areas:
+      'i n'
+      'i h'
+      'i p'
+      'i t';
+
+    animation: block-appear 0.5s ease-in-out 0s 1;
+
+    img {
+      width: $blockchain-logo-size;
+
+      grid-area: i;
+      align-self: center;
+
+      margin-right: $padding;
+
+      transform-origin: center;
+    }
+
+    .Block__Number {
+      grid-area: n;
+
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    .Block__Hash {
+      grid-area: h;
+
+      .Block__Hash__Value {
+        @include header-info;
+
+        width: 50px;
+        word-wrap: break-word;
+      }
+    }
+
+    .Block__PreviousHash {
+      grid-area: p;
+
+      .Block__PreviousHash__Value {
+        @include header-info;
+
+        width: 50px;
+        word-wrap: break-word;
+      }
+    }
+
+    .Block__Transactions {
+      grid-area: t;
+
+      .Block__Transactions__Value {
+        @include header-info;
+      }
+    }
+
+    &:hover {
+      img {
+        animation: animate-hyperledger 0.4s ease-in-out 0s 1;
+      }
+    }
+  }
+}
